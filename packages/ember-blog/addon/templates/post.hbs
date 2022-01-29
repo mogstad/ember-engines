@@ -11,8 +11,7 @@
 </p>
 
 {{outlet}}
-
-{{#link-to-external "home" class="routable-post-home-link"}}Go home{{/link-to-external}}
+<LinkToExternal @route="home" class="routable-post-home-link">Go home</LinkToExternal>
 <LinkTo @route="index" class="routable-post-blog-home-link">Go to blog home</LinkTo>
 <LinkTo @route="application" class="routable-post-blog-home-link-app">Also goes to blog home</LinkTo>
 
