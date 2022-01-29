@@ -45,7 +45,7 @@
     "chai": "^4.2.0",
     "common-tags": "^1.8.0",
     "eager-blog": "0.8.20",
-    "ember-auto-import": "^2.2.0",
+    "ember-auto-import": "^2.4.0",
     "ember-blog": "0.8.20",
     "ember-chat": "0.8.20",
     "ember-cli": "~3.17.0",
