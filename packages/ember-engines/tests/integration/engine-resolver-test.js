@@ -12,7 +12,7 @@ module("Integration | Component | engine-resolver-for | hello-name", function(
   test("component renders properly after lookup with engine-resolver-for", async function(assert) {
     assert.expect(1);
 
-    await render(hbs`{{#hello-name}}{{/hello-name}}`);
+    await render(hbs`<HelloName></HelloName>`);
 
     assert.equal(this.element.innerText.trim(), "Hello, Jerry!");
   });
