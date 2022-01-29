@@ -11,7 +11,9 @@ module('Integration | Component | pretty color', function(hooks) {
   });
 
   test('it renders properly [curly braces]', async function(assert) {
-    await this.render(hbs`{{link-to-external 'home' 'home'}}`);
+    await this.render(
+      hbs`{{#link-to-external route='home'}}home{{/link-to-external}}`
+    );
     assert.equal(this.element.querySelector('a').textContent, 'home');
   });
 
