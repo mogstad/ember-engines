@@ -17,6 +17,7 @@ module('Unit | EngineInstance', function(hooks) {
       Resolver,
       modulePrefix: config.modulePrefix,
       router: null,
+      rootElement: '#ember-testing'
     });
 
     run(function() {
@@ -34,14 +35,12 @@ module('Unit | EngineInstance', function(hooks) {
     }
   });
 
-  test('it can build a child engine instance without parent dependencies defined', function(
-    assert
-  ) {
+  test('it can build a child engine instance without parent dependencies defined', function(assert) {
     assert.expect(1);
 
     let BlogEngine = Engine.extend({
       router: null,
-      dependencies: Object.freeze({}),
+      dependencies: Object.freeze({})
     });
 
     app.engines = undefined;
@@ -58,9 +57,7 @@ module('Unit | EngineInstance', function(hooks) {
     return blogEngineInstance.boot();
   });
 
-  test('it can build a child engine instance with no dependencies', function(
-    assert
-  ) {
+  test('it can build a child engine instance with no dependencies', function(assert) {
     assert.expect(1);
 
     let BlogEngine = Engine.extend({ router: null });
@@ -77,24 +74,22 @@ module('Unit | EngineInstance', function(hooks) {
     return blogEngineInstance.boot();
   });
 
-  test('it can build a child engine instance with dependencies', function(
-    assert
-  ) {
+  test('it can build a child engine instance with dependencies', function(assert) {
     assert.expect(2);
 
     let BlogEngine = Engine.extend({
       router: null,
       dependencies: Object.freeze({
-        services: ['store'],
-      }),
+        services: ['store']
+      })
     });
 
     app.engines = {
       blog: {
         dependencies: {
-          services: ['store'],
-        },
-      },
+          services: ['store']
+        }
+      }
     };
 
     app.register('engine:blog', BlogEngine);
@@ -115,24 +110,22 @@ module('Unit | EngineInstance', function(hooks) {
     });
   });
 
-  test('it deprecates support for `router` service from host', function(
-    assert
-  ) {
+  test('it deprecates support for `router` service from host', function(assert) {
     assert.expect(2);
 
     let BlogEngine = Engine.extend({
       router: null,
       dependencies: Object.freeze({
-        services: ['router'],
-      }),
+        services: ['router']
+      })
     });
 
     app.engines = {
       blog: {
         dependencies: {
-          services: ['router'],
-        },
-      },
+          services: ['router']
+        }
+      }
     };
 
     app.register('engine:blog', BlogEngine);
@@ -149,28 +142,26 @@ module('Unit | EngineInstance', function(hooks) {
     );
   });
 
-  test('it can build a child engine instance with dependencies that are aliased', function(
-    assert
-  ) {
+  test('it can build a child engine instance with dependencies that are aliased', function(assert) {
     assert.expect(2);
 
     let BlogEngine = Engine.extend({
       router: null,
       dependencies: Object.freeze({
         services: [
-          'data-store', // NOTE: Blog engine uses alias to 'store'
-        ],
-      }),
+          'data-store' // NOTE: Blog engine uses alias to 'store'
+        ]
+      })
     });
 
     app.engines = {
       blog: {
         dependencies: {
           services: [
-            { 'data-store': 'store' }, // NOTE: Main engine provides alias
-          ],
-        },
-      },
+            { 'data-store': 'store' } // NOTE: Main engine provides alias
+          ]
+        }
+      }
     };
 
     app.register('engine:blog', BlogEngine);
@@ -197,28 +188,28 @@ module('Unit | EngineInstance', function(hooks) {
     let NormalBlogEngine = Engine.extend({
       router: null,
       dependencies: Object.freeze({
-        services: ['store'],
-      }),
+        services: ['store']
+      })
     });
 
     let SuperBlogEngine = Engine.extend({
       router: null,
       dependencies: Object.freeze({
-        services: ['store'],
-      }),
+        services: ['store']
+      })
     });
 
     app.engines = {
       'normal-blog': {
         dependencies: {
-          services: ['store'],
-        },
+          services: ['store']
+        }
       },
       superBlog: {
         dependencies: {
-          services: ['store'],
-        },
-      },
+          services: ['store']
+        }
+      }
     };
 
     app.register('engine:normal-blog', NormalBlogEngine);
@@ -227,12 +218,16 @@ module('Unit | EngineInstance', function(hooks) {
     let appInstance = app.buildInstance();
     appInstance.setupRegistry();
 
-    let normalBlogEngineInstance = appInstance.buildChildEngineInstance('normal-blog');
+    let normalBlogEngineInstance = appInstance.buildChildEngineInstance(
+      'normal-blog'
+    );
     assert.deprecationsExclude(
       `Support for camelized engine names has been deprecated. Please use 'normal-blog' instead of 'normalBlog'.`
     );
 
-    let superBlogEngineInstance = appInstance.buildChildEngineInstance('super-blog');
+    let superBlogEngineInstance = appInstance.buildChildEngineInstance(
+      'super-blog'
+    );
     assert.deprecationsInclude(
       `Support for camelized engine names has been deprecated. Please use 'super-blog' instead of 'superBlog'.`
     );
